@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: mongodbrs
+spec:
+  selector:
+    matchLabels:
+      app: mongodb
+  template:
+    metadata:
+      labels:
+        app: mongodb
+    spec:
+      volumes:
+      - name: mongodb-pvc
+        persistentVolumeClaim:
+          claimName: pvc-hostpath
+      containers:
+      - name: mongodbcontainer
+        image: mongo
+        ports:
+        - containerPort: {{ .Values.mongo.containerPort }}
+        env:
+        - name: MONGO_INITDB_ROOT_USERNAME
+          valueFrom:
+            configMapKeyRef:
+              name: springappconfigmap
+              key: username
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: springappsecrets
+              key: password
+        volumeMounts:
+        - name: mongodb-pvc
+          mountPath: {{ .Values.mongo.mountPath }}

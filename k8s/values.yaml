@@ -1,0 +1,21 @@
+replicaCount: 2
+
+image:
+  repository: dockerhandson/spring-boot-mongo
+  tag: latest
+
+mongo:
+  username: springapp
+  password: devdb@123
+  containerPort: 27017
+  mountPath: /data/db
+
+springapp:
+  containerPort: 8080
+  servicePort: 80
+
+persistence:
+  storageClass: manual
+  accessMode: ReadWriteOnce
+  size: 100Mi
+  hostPath: /tmp/mongodata

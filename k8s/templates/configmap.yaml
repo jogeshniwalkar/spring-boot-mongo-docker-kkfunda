@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: springappconfigmap
+data:
+  username: {{ .Values.mongo.username }}
+  password: mongodb@123
