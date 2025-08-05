@@ -82,12 +82,13 @@ kind: Service
 metadata:
   name: springapp
 spec:
+  type: LoadBalancer
   selector:
     app: springapp
   ports:
+  - protocol: TCP
   - port: 80
     targetPort: 8080
-  type: NodePort
 ---
 # Mongo db pod with volumes(HostPath)
 apiVersion: apps/v1
